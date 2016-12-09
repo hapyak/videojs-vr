@@ -173,7 +173,15 @@
             camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
 
             cameraVector = new THREE.Vector3(); // Store vector representing the direction in which the camera is looking, in world space.
-
+            player.camera = {"vector": cameraVector,"getCameraAngle": function(axis) {
+               var radiansToDegrees = function (radians) { return radians * 180 / Math.PI; };
+               if (axis == "x") {
+                    return 180-radiansToDegrees(Math.atan2(cameraVector.x, cameraVector.z));
+               } else if (axis == "y") {
+                    return 180-radiansToDegrees(Math.atan2(cameraVector.y, cameraVector.z));
+               }
+            }};
+            
             if ((current_proj === "360_LR") || (current_proj === "360_TB")) {
                 camera.layers.enable( 1 ); // Render left eye when not in VR mode
             }
